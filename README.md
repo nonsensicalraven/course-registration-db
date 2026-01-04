@@ -3,3 +3,11 @@ University Course Registration &amp; Seat Allocation Engine This project models 
 
 ## ER Diagram
 ![ER Diagram](design/ER_Diagram.png)
+
+## Tech Stack
+- Database: MySQL
+- Backend: Java (JDBC)
+- Frontend: HTML, CSS, JavaScript
+- Design: dbdiagram.io (ER modeling)
+- Tools: MySQL Workbench, GitHub
+
