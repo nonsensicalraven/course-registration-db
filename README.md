@@ -4,6 +4,13 @@ University Course Registration &amp; Seat Allocation Engine This project models 
 ## ER Diagram
 ![ER Diagram](design/ER_Diagram.png)
 
+## Features
+- Normalized MySQL schema (3NF+)
+- Prerequisite enforcement
+- Seat allocation & waitlisting
+- Database-level constraints
+- Analytical SQL queries
+
 ## Tech Stack
 - Database: MySQL
 - Backend: Java (JDBC)
