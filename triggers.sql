@@ -28,47 +28,6 @@ END$$
 
 DELIMITER ;
 
--- Trigger 2:
--- Automatically promote the next waitlisted student when a seat is freed
-DELIMITER $$
-
-CREATE TRIGGER after_enrollment_drop
-AFTER UPDATE ON enrollment
-FOR EACH ROW
-BEGIN
-    DECLARE next_enrollment INT;
-
-    IF OLD.status = 'ENROLLED' AND NEW.status = 'DROPPED' THEN
-
-        -- Free one seat
-        UPDATE course
-        SET enrolled_count = enrolled_count - 1
-        WHERE course_id = OLD.course_id;
-
-        -- Find the earliest waitlisted enrollment
-        SELECT enrollment_id
-        INTO next_enrollment
-        FROM enrollment
-        WHERE course_id = OLD.course_id
-          AND status = 'WAITLISTED'
-        ORDER BY enrollment_id
-        LIMIT 1;
-
-        -- Promote if exists
-        IF next_enrollment IS NOT NULL THEN
-            UPDATE enrollment
-            SET status = 'ENROLLED'
-            WHERE enrollment_id = next_enrollment;
-
-            UPDATE course
-            SET enrolled_count = enrolled_count + 1
-            WHERE course_id = OLD.course_id;
-        END IF;
-
-    END IF;
-END$$
-
-DELIMITER ;
 
 -- Trigger 3:
 -- Prevent enrollment if prerequisites are not satisfied

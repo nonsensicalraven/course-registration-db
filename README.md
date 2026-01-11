@@ -11,6 +11,14 @@ University Course Registration &amp; Seat Allocation Engine This project models 
 - Database-level constraints
 - Analytical SQL queries
 
+## Enrollment Logic
+
+- Seat allocation and waitlisting are enforced using database triggers.
+- Prerequisite eligibility is checked before enrollment.
+- Due to MySQL trigger limitations, dropping a course and promoting the next waitlisted student is handled via a stored procedure (`drop_enrollment_and_promote`).
+- This ensures transactional safety and avoids recursive trigger updates.
+
+
 ## Tech Stack
 - Database: MySQL
 - Backend: Java (JDBC)
