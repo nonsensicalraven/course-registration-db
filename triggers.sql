@@ -70,5 +70,30 @@ END$$
 
 DELIMITER ;
 
+DELIMITER $$
+
+CREATE TRIGGER before_enrollment_prereq_check
+BEFORE INSERT ON enrollment
+FOR EACH ROW
+BEGIN
+    DECLARE missing_prereqs INT;
+
+    SELECT COUNT(*)
+    INTO missing_prereqs
+    FROM prerequisite p
+    WHERE p.course_id = NEW.course_id
+      AND p.prereq_course_id NOT IN (
+          SELECT c.course_id
+          FROM completed_course c
+          WHERE c.student_id = NEW.student_id
+      );
+
+    IF missing_prereqs > 0 THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Prerequisites not satisfied';
+    END IF;
+END$$
+
+DELIMITER ;
 
 
