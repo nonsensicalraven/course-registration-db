@@ -22,7 +22,6 @@ University Course Registration &amp; Seat Allocation Engine This project models 
 ## Tech Stack
 - Database: MySQL
 - Backend: Java (JDBC)
-- Frontend: HTML, CSS, JavaScript
 - Design: dbdiagram.io (ER modeling)
 - Tools: MySQL Workbench, GitHub
 
